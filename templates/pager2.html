@@ -1,0 +1,13 @@
+{% if posts.has_previous %}
+    <a href="/warn?p={{ posts.previous_page_number }}&dateName={{ dt }}&rate={{ rt }}">Previous</a>
+    {% else %}
+    <a href="#">Previous</a>
+{% endif %}
+
+{% if posts.has_next %}
+    <a href="/warn?p={{ posts.next_page_number }}&dateName={{ dt }}&rate={{ rt }}">Next</a>
+{% endif %}
+
+<span>
+    {{ posts.number }} / {{ posts.paginator.num_pages }}
+</span>

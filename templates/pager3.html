@@ -1,0 +1,13 @@
+{% if posts.has_previous %}
+    <a href="/history?p={{ posts.previous_page_number }}">Previous</a>
+    {% else %}
+    <a href="#">Previous</a>
+{% endif %}
+
+{% if posts.has_next %}
+    <a href="/history?p={{ posts.next_page_number }}">Next</a>
+{% endif %}
+
+<span>
+    {{ posts.number }} / {{ posts.paginator.num_pages }}
+</span>

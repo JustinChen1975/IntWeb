@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>ONOS Router Info</title>
+</head>
+<body>
+<style>
+            .fl-table {
+                margin: 20px;
+                border-radius: 5px;
+                font-size: 12px;
+                border: none;
+                border-collapse: collapse;
+                max-width: 100%;
+                white-space: nowrap;
+                word-break: keep-all;
+            }
+
+            .fl-table th {
+                text-align: left;
+                font-size: 20px;
+            }
+
+            .fl-table tr {
+                display: table-row;
+                vertical-align: inherit;
+                border-color: inherit;
+            }
+
+            .fl-table tr:hover td {
+                background: #00d1b2;
+                color: #F8F8F8;
+            }
+
+            .fl-table td, .fl-table th {
+                border-style: none;
+                border-top: 1px solid #dbdbdb;
+                border-left: 1px solid #dbdbdb;
+                border-bottom: 3px solid #dbdbdb;
+                border-right: 1px solid #dbdbdb;
+                padding: .5em .55em;
+                font-size: 15px;
+            }
+
+            .fl-table td {
+                border-style: none;
+                font-size: 15px;
+                vertical-align: center;
+                border-bottom: 1px solid #dbdbdb;
+                border-left: 1px solid #dbdbdb;
+                border-right: 1px solid #dbdbdb;
+                height: 30px;
+            }
+
+            .fl-table tr:nth-child(even) {
+                background: #F8F8F8;
+            }
+
+            .inputbox{
+                border: 1px solid #ccc;
+                padding: 7px 0px;
+                border-radius: 3px;
+                padding-left:5px;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+                box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+                -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+                -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+                transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+            }
+            .inputbox:focus{
+                    border-color: #66afe9;
+                    outline: 0;
+                    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+                    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+            }
+            .bar7button {
+                border: 1px solid #ccc;
+                padding: 7px 7px;
+                border-radius: 3px;
+                padding-left:7px;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+                box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+                -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+                -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+                transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+            }
+            .inputbox2{
+                border: 1px solid #ccc;
+                padding: 5px 5px;
+                border-radius: 4px;
+                padding-left:5px;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+                box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+                -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+                -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+                transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+            }
+            .inputbox2:focus{
+                    border-color: #66afe9;
+                    outline: 0;
+                    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+                    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+            }
+        </style>
+    <form action="/index/" method="get">
+    {% csrf_token %}
+        <input class="inputbox2" id="date" name="dateName" required min="2000-01-01" max="2050-01-21" type="date" value={{ dt }}/>
+        <input class="inputbox" placeholder="Router:R1 or R1,R4"  type="text" name="path" value={{ path }}>
+        <input class="inputbox" placeholder="Latency:>1000 or <600"  type="text" name="latency" value={{ latency }}>
+        <input class="bar7button" type="submit" value="Search">
+        <input class="bar7button" type="button" value="ShowWarnInfo" onclick="window.location.href=/warn/">
+        <input style="float:right" class="bar7button" type="button" value="Show RealTime Graph" onclick="window.location.href='/static/path_graph.html'">
+        <input style="float:right" class="bar7button" type="button" value="Show History Graph" onclick="window.location.href='/history'">
+    </form>
+<table class="fl-table">
+ <thead>
+        <tr>
+            <th>Time</th>
+            <th>INT Path</th>
+            <th>INT Metadata</th>
+        </tr>
+    </thead>
+    <tbody>
+     {% for row in posts.object_list %}
+        <tr>
+            <td>{{ row.Time }}</td>
+            <td>{{ row.Path }}</td>
+            <td>{{ row.Latency }}</td>
+        </tr>
+      {% endfor %}
+            </tbody>
+</table>
+   {% include 'pager.html' %}
+</body>
+
+</html>
